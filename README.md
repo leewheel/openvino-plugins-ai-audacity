@@ -2,6 +2,8 @@
 ![updated_audacity_top_level](https://github.com/user-attachments/assets/f7c911db-fb98-43ff-972d-f66473b4c921)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) [![Mentioned in Awesome OpenVINO](https://awesome.re/mentioned-badge-flat.svg)](https://github.com/openvinotoolkit/awesome-openvino)
 
+[English](README.md) | [简体中文](README_CN.md)
+
 A set of AI-enabled effects, generators, and analyzers for [Audacity®](https://www.audacityteam.org/). These AI features run 100% locally on your PC :computer: -- no internet connection necessary! [OpenVINO™](https://github.com/openvinotoolkit/openvino) is used to run AI models on supported accelerators found on the user's system such as CPU, GPU, and NPU.
 
 - [**Music Separation**](doc/feature_doc/music_separation/README.md):musical_note: -- Separate a mono or stereo track into individual stems -- Drums, Bass, Vocals, & Other Instruments. 

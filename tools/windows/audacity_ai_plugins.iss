@@ -40,6 +40,7 @@ DisableWelcomePage=no
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
+Name: "chinesesimplified"; MessagesFile: "ChineseSimplified.isl"
 
 [Types]
 Name: "recommended"; Description: "Install recommended models"
