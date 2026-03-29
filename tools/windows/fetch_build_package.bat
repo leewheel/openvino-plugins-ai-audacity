@@ -1,26 +1,21 @@
 @echo off
-setlocal 
+setlocal
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :: Create Build Folder
-::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 set "bat_path=%~dp0"
 
-:: Get date and time in YYYYMMDD_HHMMSS format
-set "datestamp=%DATE:~-4%%DATE:~4,2%%DATE:~7,2%"
-set "timestamp=%TIME:~0,2%%TIME:~3,2%%TIME:~6,2%"
-set "timestamp=%timestamp: =0%"
-
-:: Combine them to form a folder name
-set "BUILD_FOLDER=%cd%\BuildArtifacts-%datestamp%_%timestamp%"
+:: Use fixed folder name to avoid issues with non-ASCII characters in date/time
+set "BUILD_FOLDER=%cd%\BuildArtifacts"
 
 echo BUILD_FOLDER=%BUILD_FOLDER%
 
 :: Create the folder
-md "%BUILD_FOLDER%"
+md "%BUILD_FOLDER%" 2>nul
 
 :: Go into the build folder
-cd "%BUILD_FOLDER%"
+cd /d "%BUILD_FOLDER%"
 
 echo Starting PreReq Routine...
 set "prereq_bat=%bat_path%prereq.bat

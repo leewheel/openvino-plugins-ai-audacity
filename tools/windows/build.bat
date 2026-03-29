@@ -130,29 +130,35 @@ set current_work_dir=%cd%
 :: apply patch that adds mod-openvino to build
 cd %AUDACITY_CLONE_DIR%
 
-:: Check if 'git' command exists
-git --version >nul 2>&1
-IF NOT ERRORLEVEL 1 (
-  echo Applying patch using git command...
-  git apply --ignore-whitespace %audacity_add_ov_mod_patch_path% || exit /b 1
-  git apply --ignore-whitespace %audacity_no_vc_runtime_install_patch% || exit /b 1
-) ELSE (
-  :: Since git is not available, check if 'patch' command exists
-  patch --version >nul 2>&1
-  IF NOT ERRORLEVEL 1 (
-    echo Applying patch using patch command...
-    patch -p1 < %audacity_add_ov_mod_patch_path% || exit /b 1
-    patch -p1 < %audacity_no_vc_runtime_install_patch% || exit /b 1
-  ) ELSE (
-    echo Neither git nor patch command is available.
-    exit /b 1
-  )
+:: Check if mod-openvino is already in modules list
+findstr /C:"mod-openvino" modules\etc\CMakeLists.txt >nul 2>&1
+if %ERRORLEVEL% EQU 0 (
+    echo mod-openvino already added to CMakeLists.txt, skipping patch...
+) else (
+    :: Check if 'git' command exists
+    git --version >nul 2>&1
+    IF NOT ERRORLEVEL 1 (
+        echo Applying patch using git command...
+        git apply --ignore-whitespace %audacity_add_ov_mod_patch_path% || exit /b 1
+        git apply --ignore-whitespace %audacity_no_vc_runtime_install_patch% || exit /b 1
+    ) ELSE (
+        :: Since git is not available, check if 'patch' command exists
+        patch --version >nul 2>&1
+        IF NOT ERRORLEVEL 1 (
+            echo Applying patch using patch command...
+            patch -p1 < %audacity_add_ov_mod_patch_path% || exit /b 1
+            patch -p1 < %audacity_no_vc_runtime_install_patch% || exit /b 1
+        ) ELSE (
+            echo Neither git nor patch command is available.
+            exit /b 1
+        )
+    )
 )
 
 cd %current_work_dir%
 set current_work_dir=
 
-xcopy %AI_PLUGIN_REPO_SOURCE_FOLDER%mod-openvino "%AUDACITY_CLONE_DIR%\modules\etc\mod-openvino" /E /I || exit /b 1
+xcopy %AI_PLUGIN_REPO_SOURCE_FOLDER%mod-openvino "%AUDACITY_CLONE_DIR%\modules\etc\mod-openvino" /E /I /Y || exit /b 1
 
 :: Build Audacity + our OpenVINO module
 mkdir audacity-build
